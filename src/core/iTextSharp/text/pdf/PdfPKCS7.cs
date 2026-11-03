@@ -986,8 +986,9 @@ namespace iTextSharp.text.pdf {
             else
                 digest = sig.GenerateSignature();
             MemoryStream bOut = new MemoryStream();
-            
-            Asn1OutputStream dout = new Asn1OutputStream(bOut);
+
+            // original itextsharp: Asn1OutputStream dout = new Asn1OutputStream(bOut);
+            Asn1OutputStream dout = Asn1OutputStream.Create(bOut);
             dout.WriteObject(new DerOctetString(digest));
             dout.Close();
             
@@ -1156,7 +1157,8 @@ namespace iTextSharp.text.pdf {
 //                }
             
             // Only allow one signerInfo
-            body.Add(new DerSet(new DerSequence(signerinfo)));
+            // original itextsharp: body.Add(new DerSet(new DerSequence(signerinfo)));
+            body.Add(new DerSet(element: new DerSequence(signerinfo)));
             
             // Now we have the body, wrap it in it's PKCS7Signed shell
             // and return it
@@ -1166,8 +1168,9 @@ namespace iTextSharp.text.pdf {
             whole.Add(new DerTaggedObject(0, new DerSequence(body)));
             
             MemoryStream bOut = new MemoryStream();
-            
-            Asn1OutputStream dout = new Asn1OutputStream(bOut);
+
+            // original itextsharp : Asn1OutputStream dout = new Asn1OutputStream(bOut);
+            Asn1OutputStream dout = Asn1OutputStream.Create(bOut); // Not quite sure if it is correct, however we don't use it and just need it to compile
             dout.WriteObject(new DerSequence(whole));
             dout.Close();
             
@@ -1196,7 +1199,8 @@ namespace iTextSharp.text.pdf {
             Asn1EncodableVector v = new Asn1EncodableVector();
             v.Add(new DerObjectIdentifier(ID_TIME_STAMP_TOKEN)); // id-aa-timeStampToken
             Asn1Sequence seq = (Asn1Sequence) tempstream.ReadObject();
-            v.Add(new DerSet(seq));
+            // original itextsharp: v.Add(new DerSet(seq));
+            v.Add(new DerSet(element: seq));
 
             unauthAttributes.Add(new DerSequence(v));
             return unauthAttributes;
@@ -1260,7 +1264,8 @@ namespace iTextSharp.text.pdf {
                 v3.Add(den);
                 v3.Add(new DerTaggedObject(true, 0, new DerSequence(v2)));
                 vo1.Add(new DerSequence(v3));
-                v.Add(new DerSet(new DerSequence(new DerTaggedObject(true, 1, new DerSequence(vo1)))));
+                // original itextsharp: v.Add(new DerSet(new DerSequence(new DerTaggedObject(true, 1, new DerSequence(vo1)))));
+                v.Add(new DerSet(element: new DerSequence(new DerTaggedObject(true, 1, new DerSequence(vo1)))));
                 attribute.Add(new DerSequence(v));
             }
             return new DerSet(attribute);

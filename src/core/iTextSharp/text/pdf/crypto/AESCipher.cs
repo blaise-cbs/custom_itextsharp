@@ -63,8 +63,10 @@ namespace iTextSharp.text.pdf.crypto {
         
         /** Creates a new instance of AESCipher */
         public AESCipher(bool forEncryption, byte[] key, byte[] iv) {
-            IBlockCipher aes = new AesFastEngine();
-            IBlockCipher cbc = new CbcBlockCipher(aes);
+            // original itextsharp: IBlockCipher aes = new AesFastEngine();
+            var aes = new Org.BouncyCastle.Crypto.Engines.AesEngine();
+            // oriignal itextsharp: IBlockCipher cbc = new CbcBlockCipher(aes);
+            var cbc = new CbcBlockCipher(aes);
             bp = new PaddedBufferedBlockCipher(cbc);
             KeyParameter kp = new KeyParameter(key);
             ParametersWithIV piv = new ParametersWithIV(kp, iv);

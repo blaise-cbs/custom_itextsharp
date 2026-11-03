@@ -115,8 +115,10 @@ namespace iTextSharp.text.pdf {
             Asn1Object obj = CreateDERForRecipient(pkcs7input, certificate);
                 
             MemoryStream baos = new MemoryStream();
-                
-            DerOutputStream k = new DerOutputStream(baos);
+
+            // original itextsharp: DerOutputStream k = new DerOutputStream(baos);
+            Asn1OutputStream k = Asn1OutputStream.Create(baos); // Not quite sure that this is correct, however since we don't use it and just need it to compile it is fine.
+            
                 
             k.WriteObject(obj);  
             
@@ -167,7 +169,8 @@ namespace iTextSharp.text.pdf {
             AlgorithmIdentifier algorithmidentifier = new AlgorithmIdentifier(derob, seq);
             EncryptedContentInfo encryptedcontentinfo = 
                 new EncryptedContentInfo(PkcsObjectIdentifiers.Data, algorithmidentifier, deroctetstring);
-            EnvelopedData env = new EnvelopedData(null, derset, encryptedcontentinfo, null);
+            // original itextsharp: EnvelopedData env = new EnvelopedData(null, derset, encryptedcontentinfo, null);
+            EnvelopedData env = new EnvelopedData(originatorInfo: (OriginatorInfo)null, recipientInfos: derset, encryptedContentInfo: encryptedcontentinfo, unprotectedAttrs: (Asn1Set)null);
             Org.BouncyCastle.Asn1.Cms.ContentInfo contentinfo = 
                 new Org.BouncyCastle.Asn1.Cms.ContentInfo(PkcsObjectIdentifiers.EnvelopedData, env);
             return contentinfo.ToAsn1Object();        
@@ -183,7 +186,8 @@ namespace iTextSharp.text.pdf {
                 new Org.BouncyCastle.Asn1.Cms.IssuerAndSerialNumber(
                     tbscertificatestructure.Issuer, 
                     tbscertificatestructure.SerialNumber.Value);
-            IBufferedCipher cipher = CipherUtilities.GetCipher(algorithmidentifier.ObjectID);
+            // original itextsharp: IBufferedCipher cipher = CipherUtilities.GetCipher(algorithmidentifier.ObjectID);
+            IBufferedCipher cipher = CipherUtilities.GetCipher(algorithmidentifier.Algorithm);
             cipher.Init(true, x509certificate.GetPublicKey());
             byte[] outp = new byte[10000];
             int len = cipher.DoFinal(abyte0, outp, 0);
