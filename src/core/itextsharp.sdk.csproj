@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<AssemblyName>itextsharp</AssemblyName>
+		<RootNamespace>iTextSharp</RootNamespace>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<DocumentationFile>iTextSharp.xml</DocumentationFile>
+		<!-- Preserve project-specific warnings to ignore -->
+		<NoWarn>1572;1587;1570;1591;1573;1596</NoWarn>
+		<LangVersion>12.0</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Courier-Bold.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Courier-BoldOblique.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Courier-Oblique.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Courier.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\glyphlist.txt" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Helvetica-Bold.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Helvetica-BoldOblique.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Helvetica-Oblique.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Helvetica.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Symbol.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Times-Bold.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Times-BoldItalic.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Times-Italic.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\Times-Roman.afm" />
+		<EmbeddedResource Include="iTextSharp\text\pdf\fonts\ZapfDingbats.afm" />
+
+		<Compile Remove="srcbc\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+		<PackageReference Include="StrongNamer" Version="0.2.5" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+
+</Project>

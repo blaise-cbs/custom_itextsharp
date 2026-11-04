@@ -54,5 +54,7 @@ using System.Runtime.CompilerServices;
 //       documentation for more information on this.
 //
 [assembly: AssemblyDelaySign(false)]
+#if SIGN_ASSEMBLY
 [assembly: AssemblyKeyFile("..\\..\\itextsharp.snk")]
 [assembly: AssemblyKeyName("")]
+#endif
